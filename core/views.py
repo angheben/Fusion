@@ -6,3 +6,7 @@ class IndexView(TemplateView):
     template_name = 'index.html'
 
 
+class TestView(TemplateView):
+    template_name = '404.html'
+
+

@@ -3,9 +3,9 @@ from stdimage.models import StdImageField
 
 
 class Base(models.Model):
-    creation = models.DateField('Creation', auto_now_add=True)
-    modification = models.DateField('Actualization', auto_now=True)
-    active = models.BooleanField('Active?', default=True)
+    creation = models.DateField(name='Creation', auto_now_add=True)
+    modification = models.DateField(name='Actualization', auto_now=True)
+    active = models.BooleanField(name='Active', default=True)
 
     class Meta:
         abstract = True
@@ -20,32 +20,26 @@ class Service(Base):
         ('lni-mobile', 'Mobile'),
         ('lni-rocket', 'Rocket')
     )
-    service = models.CharField('Services', max_length=100)
-    description = models.TextField('Description', max_length=200)
-    icon = models.CharField('Icon', max_length=12, choices=ICON_CHOICES)
+    service = models.CharField(name='Service', max_length=100)
+    description = models.TextField(name='Description', max_length=200)
+    icon = models.CharField(name='Icon', max_length=12, choices=ICON_CHOICES)
 
     class Meta:
         verbose_name = 'Services'
         verbose_name_plural = 'Services'
 
-    def __str__(self):
-        return self.service
-
 
 class Role(Base):
-    role = models.CharField("Role", max_length=100)
+    role = models.CharField(name="Role", max_length=100)
 
     class Meta:
         verbose_name = 'Role'
         verbose_name_plural = 'Roles'
 
-    def __str__(self):
-        return self.role
-
 
 class Employee(Base):
-    name = models.CharField("Name", max_length=100)
-    role = models.ForeignKey('core.Role', verbose_name='Role', on_delete=models.CASCADE)
+    name = models.CharField(name="Name", max_length=100)
+    role = models.CharField('core.Role', name='Role', max_length=100)
     bio = models.TextField('Bio', max_length=200)
     image = StdImageField('Image', upload_to='team', variations={"thumb": {"width": 480, 'height': 480, 'crop': True}})
     facebook = models.CharField("Facebook", max_length=100, default='#')
@@ -55,6 +49,3 @@ class Employee(Base):
     class Meta:
         verbose_name = 'Employee'
         verbose_name_plural = 'Employees'
-
-    def __str__(self):
-        return self.name
